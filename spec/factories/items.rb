@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :item do
-    name "Item"
-    description "This is an item"
+    description "Item"
     unit_price 1000
+    association :merchant, factory: :merchant
   end
 end
