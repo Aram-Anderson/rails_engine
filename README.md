@@ -12,8 +12,14 @@ Things you may want to cover:
 * Configuration
 
 * Database creation
-
+* rake db:create
 * Database initialization
+* rake db:migrate
+* then to seed:
+* A single table can be seeded with
+* rake csv_seed_data:create_*table name*
+* The whole database can be seeded by running:
+* rake csv_seed_data:seed_all
 
 * How to run the test suite
 
