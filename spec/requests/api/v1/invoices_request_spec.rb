@@ -23,12 +23,13 @@ describe "Invoices API" do
       invoice_response = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_response["status"]).to eq("Pending")
+      expect(invoice_response["id"]).to eq(invoice.id)
+      expect(invoice_response["status"]).to eq(invoice.status)
     end
   end
 
   context "GET /invoices/find?parameters" do
-    it "can find an invoice by id" do
+    xit "can find an invoice by id" do
       invoice = create(:invoice)
 
       get "/api/v1/invoices/find?id=#{invoice.id}"
@@ -37,6 +38,7 @@ describe "Invoices API" do
 
       expect(response).to be_success
       expect(invoice_response["id"]).to eq(invoice.id)
+      expect(invoice_response["status"]).to eq(invoice.status)
     end
   end
 end
