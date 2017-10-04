@@ -130,9 +130,9 @@ describe "Invoices API" do
     end
 
     it "can find all invoices by created_at" do
-      invoice_1 = Invoice.create(created_at: "2017-10-03 20:20:20")
-      invoice_2 = Invoice.create(created_at: "2017-10-03 20:20:20")
-      invoice_3 = Invoice.create(created_at: "2017-05-02 21:21:21")
+      invoice_1 = create(:invoice, created_at: "2017-10-03 20:20:20")
+      invoice_2 = create(:invoice, created_at: "2017-10-03 20:20:20")
+      invoice_3 = create(:invoice, created_at: "2017-05-02 21:21:21")
 
       get "/api/v1/invoices/find_all?created_at=#{invoice_1.created_at.to_s}"
 
@@ -143,9 +143,9 @@ describe "Invoices API" do
     end
 
     it "can find all invoices by updated_at" do
-      invoice_1 = Invoice.create(updated_at: "2017-10-03 20:20:20")
-      invoice_2 = Invoice.create(updated_at: "2017-10-03 20:20:20")
-      invoice_3 = Invoice.create(updated_at: "2017-10-03 21:21:21")
+      invoice_1 = create(:invoice, updated_at: "2017-10-03 20:20:20")
+      invoice_2 = create(:invoice, updated_at: "2017-10-03 20:20:20")
+      invoice_3 = create(:invoice, updated_at: "2017-10-03 21:21:21")
 
       get "/api/v1/invoices/find_all?updated_at=#{invoice_1.updated_at.to_s}"
 

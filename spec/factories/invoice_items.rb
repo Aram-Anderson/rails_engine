@@ -4,5 +4,7 @@ FactoryGirl.define do
     unit_price 1000
     item
     invoice
+    created_at Time.now
+    updated_at Time.now
   end
 end
