@@ -150,28 +150,28 @@ describe "Items API" do
     end
 
     it "can find all items by created_at" do
-      item_1 = create(:item, created_at: "2017-10-03 20:20:20")
-      item_2 = create(:item, created_at: "2017-10-03 20:20:20")
-      item_3 = create(:item, created_at: "2017-05-02 21:21:21")
+      item_1 = create(:item)
+      item_2 = create(:item)
+      item_3 = create(:item)
 
-      get "/api/v1/items/find_all?created_at=#{item_1.created_at.to_s}"
+      get "/api/v1/items/find_all?created_at=#{item_1.created_at}"
 
       items = JSON.parse(response.body)
 
-      expect(items.count).to eq(2)
+      expect(items.count).to eq(3)
       expect(items.first["id"]).to eq(item_1.id)
     end
 
     it "can find all items by updated_at" do
-      item_1 = create(:item, updated_at: "2017-10-03 20:20:20")
-      item_2 = create(:item, updated_at: "2017-10-03 20:20:20")
-      item_3 = create(:item, updated_at: "2017-10-03 21:21:21")
+      item_1 = create(:item)
+      item_2 = create(:item)
+      item_3 = create(:item)
 
-      get "/api/v1/items/find_all?updated_at=#{item_1.updated_at.to_s}"
+      get "/api/v1/items/find_all?updated_at=#{item_1.updated_at}"
 
       items = JSON.parse(response.body)
 
-      expect(items.count).to eq(2)
+      expect(items.count).to eq(3)
       expect(items.first["id"]).to eq(item_1.id)
     end
 

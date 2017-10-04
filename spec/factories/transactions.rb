@@ -4,7 +4,12 @@ FactoryGirl.define do
     credit_card_expiration_date nil
     result "success"
     invoice
+<<<<<<< HEAD
     created_at Time.now
     updated_at Time.now
+=======
+    created_at "2012-03-27 14:54:09 UTC"
+    updated_at "2012-03-27 14:54:09 UTC"
+>>>>>>> master
   end
 end
