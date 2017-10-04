@@ -216,4 +216,18 @@ describe "Items API" do
       expect(items.first["id"]).to eq(item_1.id)
     end
   end
+
+  context "GET /items/random" do
+    it "can find a random item" do
+      item_1 = create(:item)
+      item_2 = create(:item)
+
+      get "/api/v1/items/random"
+
+      item = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(item["name"]).to eq(item_1.name).or eq(item_2.name)
+    end
+  end
 end

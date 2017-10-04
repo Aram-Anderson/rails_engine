@@ -217,4 +217,18 @@ describe "Transactions API" do
       expect(transactions.first["id"]).to eq(transaction_1.id)
     end
   end
+
+  context "GET /transactions/random" do
+    it "can find a random transaction" do
+      transaction_1 = create(:transaction)
+      transaction_2 = create(:transaction)
+
+      get "/api/v1/transactions/random"
+
+      transaction = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(transaction["result"]).to eq(transaction_1.result).or eq(transaction_2.result)
+    end
+  end
 end
