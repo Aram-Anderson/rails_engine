@@ -77,7 +77,6 @@ describe "Invoices API" do
       invoice = create(:invoice)
 
       get "/api/v1/invoices/find?updated_at=#{invoice.updated_at}"
-
       invoice_response = JSON.parse(response.body)
 
       expect(response).to be_success
@@ -147,7 +146,7 @@ describe "Invoices API" do
     xit "can find all invoices by created_at" do
       invoice = create(:invoice)
 
-      get "/api/v1/invoices/find?created_at=#{invoice.created_at}"
+      get "/api/v1/invoices/find?created_at=#{invoice.created_at.to_s}"
 
       invoice_response = JSON.parse(response.body)
 
@@ -161,7 +160,7 @@ describe "Invoices API" do
     xit "can find all invoices by updated_at" do
       invoice = create(:invoice)
 
-      get "/api/v1/invoices/find?updated_at=#{invoice.updated_at}"
+      get "/api/v1/invoices/find?updated_at=#{invoice.updated_at.to_s}"
 
       invoice_response = JSON.parse(response.body)
 
