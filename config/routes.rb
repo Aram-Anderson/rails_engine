@@ -33,8 +33,8 @@ Rails.application.routes.draw do
       end
       resources :transactions, only: [:index, :show] do
       collection do
-        get '/find_all', to: 'transactions#index'
-        get '/find', to: 'transactions#show'
+        get '/find_all', to: 'transactions/search#index'
+        get '/find', to: 'transactions/search#show'
       end
     end
     end
