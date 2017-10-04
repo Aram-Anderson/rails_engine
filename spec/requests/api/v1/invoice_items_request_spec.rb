@@ -191,4 +191,17 @@ describe "Invoice Items API" do
       expect(invoice_items.first["invoice_id"]).to eq(invoice_1.id)
     end
   end
+  context "GET /invoice_items/random" do
+    it "can find a random invoice_item" do
+      invoice_item_1 = create(:invoice_item)
+      invoice_item_2 = create(:invoice_item)
+
+      get "/api/v1/invoice_items/random"
+
+      invoice_item = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(invoice_item["quantity"]).to eq(invoice_item_1.quantity).or eq(invoice_item_2.quantity)
+    end
+  end
 end
