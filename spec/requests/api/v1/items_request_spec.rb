@@ -25,7 +25,7 @@ describe "Items API" do
       expect(response).to be_success
       expect(item_response["id"]).to eq(item.id)
       expect(item_response["name"]).to eq(item.name)
-      expect(item_response["unit_price"]).to eq(item.unit_price)
+      expect(item_response["unit_price"]).to eq((item.unit_price.to_f / 100).round(2).to_s)
     end
   end
 
