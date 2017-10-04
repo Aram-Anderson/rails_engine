@@ -186,4 +186,18 @@ describe "Invoices API" do
       expect(invoices.first["id"]).to eq(invoice_1.id)
     end
   end
+
+  context "GET /invoices/random" do
+    it "can find a random invoice" do
+      invoice_1 = create(:invoice)
+      invoice_2 = create(:invoice)
+
+      get "/api/v1/invoices/random"
+
+      invoice = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(invoice["status"]).to eq(invoice_1.status).or eq(invoice_2.status)
+    end
+  end
 end
