@@ -24,8 +24,6 @@ describe "Transactions API" do
 
       expect(response).to be_success
       expect(transaction_response["id"]).to eq(transaction.id)
-      expect(transaction_response["credit_card_number"]).to eq(transaction.credit_card_number)
-      expect(transaction_response["credit_card_expiration_date"]).to eq(transaction.credit_card_expiration_date)
       expect(transaction_response["result"]).to eq(transaction.result)
       expect(transaction_response["invoice_id"]).to eq(transaction.invoice_id)
     end

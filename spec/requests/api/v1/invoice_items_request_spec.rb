@@ -25,7 +25,7 @@ describe "Invoice Items API" do
       expect(response).to be_success
       expect(invoice_item_response["id"]).to eq(invoice_item.id)
       expect(invoice_item_response["quantity"]).to eq(invoice_item.quantity)
-      expect(invoice_item_response["unit_price"]).to eq(invoice_item.unit_price)
+      expect(invoice_item_response["unit_price"]).to eq((invoice_item.unit_price.to_f / 100).round(2).to_s)
     end
   end
 
