@@ -110,6 +110,7 @@ describe "Transactions API" do
       transaction = create(:transaction, credit_card_expiration_date: 1)
 
       get "/api/v1/transactions/find?credit_card_expiration_date=#{transaction.credit_card_expiration_date}"
+
       transaction_response = JSON.parse(response.body)
 
       expect(response).to be_success
