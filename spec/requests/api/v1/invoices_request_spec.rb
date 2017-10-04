@@ -114,89 +114,76 @@ describe "Invoices API" do
       expect(invoice_response["merchant_id"]).to eq(invoice.merchant_id)
     end
   end
+
   context "GET /invoices/find_all?parameters" do
-    xit "can find all invoices by id" do
-      invoice = create(:invoice)
+    it "can find all invoices by status" do
+      invoice_1 = create(:invoice, status: "shipped")
+      invoice_2 = create(:invoice, status: "shipped")
+      invoice_3 = create(:invoice, status: "ordered")
 
-      get "/api/v1/invoices/find?id=#{invoice.id}"
+      get "/api/v1/invoices/find_all?status=#{invoice_1.status}"
 
-      invoice_response = JSON.parse(response.body)
+      invoices = JSON.parse(response.body)
 
-      expect(response).to be_success
-      expect(invoice_response["id"]).to eq(invoice.id)
-      expect(invoice_response["status"]).to eq(invoice.status)
-      expect(invoice_response["customer_id"]).to eq(invoice.customer_id)
-      expect(invoice_response["merchant_id"]).to eq(invoice.merchant_id)
+      expect(invoices.count).to eq(2)
+      expect(invoices.first["id"]).to eq(invoice_1.id)
     end
 
-    xit "can find all invoices by status" do
-      invoice = create(:invoice)
+    it "can find all invoices by created_at" do
+      invoice_1 = Invoice.create(created_at: "2017-10-03 20:20:20")
+      invoice_2 = Invoice.create(created_at: "2017-10-03 20:20:20")
+      invoice_3 = Invoice.create(created_at: "2017-05-02 21:21:21")
 
-      get "/api/v1/invoices/find?status=#{invoice.status}"
+      get "/api/v1/invoices/find_all?created_at=#{invoice_1.created_at.to_s}"
 
-      invoice_response = JSON.parse(response.body)
+      invoices = JSON.parse(response.body)
 
-      expect(response).to be_success
-      expect(invoice_response["id"]).to eq(invoice.id)
-      expect(invoice_response["status"]).to eq(invoice.status)
-      expect(invoice_response["customer_id"]).to eq(invoice.customer_id)
-      expect(invoice_response["merchant_id"]).to eq(invoice.merchant_id)
+      expect(invoices.count).to eq(2)
+      expect(invoices.first["id"]).to eq(invoice_1.id)
     end
 
-    xit "can find all invoices by created_at" do
-      invoice = create(:invoice)
+    it "can find all invoices by updated_at" do
+      invoice_1 = Invoice.create(updated_at: "2017-10-03 20:20:20")
+      invoice_2 = Invoice.create(updated_at: "2017-10-03 20:20:20")
+      invoice_3 = Invoice.create(updated_at: "2017-10-03 21:21:21")
 
-      get "/api/v1/invoices/find?created_at=#{invoice.created_at.to_s}"
+      get "/api/v1/invoices/find_all?updated_at=#{invoice_1.updated_at.to_s}"
 
-      invoice_response = JSON.parse(response.body)
+      invoices = JSON.parse(response.body)
 
-      expect(response).to be_success
-      expect(invoice_response["id"]).to eq(invoice.id)
-      expect(invoice_response["status"]).to eq(invoice.status)
-      expect(invoice_response["customer_id"]).to eq(invoice.customer_id)
-      expect(invoice_response["merchant_id"]).to eq(invoice.merchant_id)
+      expect(invoices.count).to eq(2)
+      expect(invoices.first["id"]).to eq(invoice_1.id)
     end
 
-    xit "can find all invoices by updated_at" do
-      invoice = create(:invoice)
+    it "can find all invoices by customer_id" do
+      customer_1 = create(:customer, id: 1)
+      customer_2 = create(:customer, id: 2)
 
-      get "/api/v1/invoices/find?updated_at=#{invoice.updated_at.to_s}"
+      invoice_1 = create(:invoice, customer_id: customer_1.id)
+      invoice_2 = create(:invoice, customer_id: customer_1.id)
+      invoice_3 = create(:invoice, customer_id: customer_2.id)
 
-      invoice_response = JSON.parse(response.body)
+      get "/api/v1/invoices/find_all?customer_id=#{invoice_1.customer_id}"
 
-      expect(response).to be_success
-      expect(invoice_response["id"]).to eq(invoice.id)
-      expect(invoice_response["status"]).to eq(invoice.status)
-      expect(invoice_response["customer_id"]).to eq(invoice.customer_id)
-      expect(invoice_response["merchant_id"]).to eq(invoice.merchant_id)
-    end
+      invoices = JSON.parse(response.body)
 
-    xit "can find all invoices by customer_id" do
-      invoice = create(:invoice)
-
-      get "/api/v1/invoices/find?customer_id=#{invoice.customer_id}"
-
-      invoice_response = JSON.parse(response.body)
-
-      expect(response).to be_success
-      expect(invoice_response["id"]).to eq(invoice.id)
-      expect(invoice_response["status"]).to eq(invoice.status)
-      expect(invoice_response["customer_id"]).to eq(invoice.customer_id)
-      expect(invoice_response["merchant_id"]).to eq(invoice.merchant_id)
+      expect(invoices.count).to eq(2)
+      expect(invoices.first["id"]).to eq(invoice_1.id)
     end
 
     it "can find all invoices by merchant_id" do
-      invoice = create(:invoice)
+      merchant_1 = create(:merchant, id: 1)
+      merchant_2 = create(:merchant, id: 2)
+      invoice_1 = create(:invoice, merchant_id: merchant_1.id)
+      invoice_2 = create(:invoice, merchant_id: merchant_1.id)
+      invoice_3 = create(:invoice, merchant_id: merchant_2.id)
 
-      get "/api/v1/invoices/find?merchant_id=#{invoice.merchant_id}"
+      get "/api/v1/invoices/find_all?merchant_id=#{invoice_1.merchant_id}"
 
-      invoice_response = JSON.parse(response.body)
+      invoices = JSON.parse(response.body)
 
-      expect(response).to be_success
-      expect(invoice_response["id"]).to eq(invoice.id)
-      expect(invoice_response["status"]).to eq(invoice.status)
-      expect(invoice_response["customer_id"]).to eq(invoice.customer_id)
-      expect(invoice_response["merchant_id"]).to eq(invoice.merchant_id)
+      expect(invoices.count).to eq(2)
+      expect(invoices.first["id"]).to eq(invoice_1.id)
     end
   end
 end
