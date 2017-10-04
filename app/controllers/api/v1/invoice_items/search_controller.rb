@@ -14,6 +14,7 @@ class Api::V1::InvoiceItems::SearchController < ApplicationController
                   :quantity,
                   :item_id,
                   :invoice_id,
+                  :unit_price,
                   :created_at,
                   :updated_at,
                   )
