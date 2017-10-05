@@ -4,12 +4,13 @@ class Api::V1::Merchants::RevenueController < ApplicationController
   end
 
   def show
-    render json: Merchant.highest_earning
+    render json: {"revenue" => (Merchant.revenue_for_merchant(search_params[:id]).to_f / 100).to_s}
   end
 
   private
 
   def search_params
-    params.permit(:quantity)
+    params.permit(:quantity,
+                  :id)
   end
 end
