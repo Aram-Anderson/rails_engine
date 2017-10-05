@@ -22,7 +22,8 @@ class Item < ApplicationRecord
     .group(:id)
     .order('total DESC')
     .limit(limit)
-
+  end
+  
   def best_day
     invoices.joins(:transactions, :invoice_items)
     .merge(Transaction.successful)
