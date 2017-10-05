@@ -3,4 +3,5 @@ class Transaction < ApplicationRecord
 
   scope :successful,     -> { where(result: 'success') }
   scope :not_successful, -> { where(result: 'failed') }
+
 end
