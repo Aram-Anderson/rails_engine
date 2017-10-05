@@ -1,6 +1,7 @@
 class Merchant < ApplicationRecord
   has_many :invoices
   has_many :items
+  has_many :customers, through: :invoices
 
   def self.highest_earning(limit = 1)
     select("merchants.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue")
@@ -48,5 +49,12 @@ class Merchant < ApplicationRecord
     .group('customers.id')
     .order("count(customers.id) DESC")
     .first
+  end
+
+  def unpaid_customers
+    customers
+    .joins(:transactions)
+    .except(Transaction.successful)
+    .distinct
   end
 end
