@@ -134,7 +134,7 @@ describe "Merchants API" do
   end
 
   context "GET merchants relationships" do
-    it "can returns a collection of items associated with that merchant" do
+    it "returns a collection of items associated with that merchant" do
       merchant = create(:merchant, id: 1)
       create(:merchant, id: 2)
       item_1 = create(:item, merchant_id: 1)
@@ -147,6 +147,21 @@ describe "Merchants API" do
 
       expect(response).to be_success
       expect(items.count).to eq(2)
+    end
+
+    it "returns a collection of invoices associated with that merchant" do
+      merchant = create(:merchant, id: 1)
+      create(:merchant, id: 2)
+      invoice_1 = create(:invoice, merchant_id: 1)
+      invoice_2 = create(:invoice, merchant_id: 1)
+      invoice_3 = create(:invoice, merchant_id: 2)
+
+      get "/api/v1/merchants/#{merchant.id}/invoices"
+
+      invoices = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(invoices.count).to eq(2)
     end
   end
 end

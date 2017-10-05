@@ -203,4 +203,19 @@ describe "Transactions API" do
       expect(transaction["result"]).to eq(transaction_1.result).or eq(transaction_2.result)
     end
   end
+
+  context "GET transactions relationships" do
+    it "returns the invoice associated with that transaction" do
+      invoice_1 = create(:invoice)
+      invoice_2 = create(:invoice)
+      transaction = create(:transaction, invoice_id: invoice_1.id)
+
+      get "/api/v1/transactions/#{transaction.id}/invoice"
+
+      invoice = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(invoice["id"]).to eq(invoice_1.id)
+    end
+  end
 end

@@ -200,4 +200,73 @@ describe "Invoices API" do
       expect(invoice["status"]).to eq(invoice_1.status).or eq(invoice_2.status)
     end
   end
+
+  context "GET invoices relationships" do
+    it "returns a collection of associated transactions" do
+      invoice = create(:invoice)
+      transaction_1 = create(:transaction, invoice_id: invoice.id)
+      transaction_2 = create(:transaction, invoice_id: invoice.id)
+
+      get "/api/v1/invoices/#{invoice.id}/transactions"
+
+      invoices = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(invoices.count).to eq(2)
+    end
+
+    it "returns a collection of associated invoice items" do
+      invoice = create(:invoice)
+      invoice_item_1 = create(:invoice_item, invoice_id: invoice.id)
+      invoice_item_2 = create(:invoice_item, invoice_id: invoice.id)
+
+      get "/api/v1/invoices/#{invoice.id}/invoice_items"
+
+      invoice_items = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(invoice_items.count).to eq(2)
+    end
+
+    it "returns a collection of associated items" do
+      invoice = create(:invoice)
+      item_1 = create(:item)
+      item_2 = create(:item)
+      invoice_item_1 = create(:invoice_item, invoice_id: invoice.id, item_id: item_1.id)
+      invoice_item_2 = create(:invoice_item, invoice_id: invoice.id, item_id: item_2.id)
+
+      get "/api/v1/invoices/#{invoice.id}/items"
+
+      invoice_items = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(invoice_items.count).to eq(2)
+    end
+    # GET /api/v1/invoices/:id/customer returns the associated customer
+    # GET /api/v1/invoices/:id/merchant
+    it "returns the associated customer" do
+      customer = create(:customer)
+      invoice = create(:invoice, customer_id: customer.id)
+
+      get "/api/v1/invoices/#{invoice.id}/customer"
+
+      customer_response = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(customer_response["id"]).to eq(customer.id)
+    end
+
+    it "returns the associated merchant" do
+      merchant = create(:merchant)
+      invoice = create(:invoice, merchant_id: merchant.id)
+
+      get "/api/v1/invoices/#{invoice.id}/merchant"
+
+      merchant_response = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(merchant_response["id"]).to eq(merchant.id)
+    end
+  end
+
 end

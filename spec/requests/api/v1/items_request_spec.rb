@@ -230,4 +230,31 @@ describe "Items API" do
       expect(item["name"]).to eq(item_1.name).or eq(item_2.name)
     end
   end
+
+  context "GET items relationships" do
+    it "returns a collection of associated invoice items" do
+      item = create(:item)
+      invoice_item_1 = create(:invoice_item, item_id: item.id)
+      invoice_item_2 = create(:invoice_item, item_id: item.id)
+
+      get "/api/v1/items/#{item.id}/invoice_items"
+
+      invoices = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(invoices.count).to eq(2)
+    end
+
+    it "returns the associated merchant" do
+      merchant = create(:merchant)
+      item = create(:item, merchant_id: merchant.id)
+
+      get "/api/v1/items/#{item.id}/merchant"
+
+      merchant_response = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(merchant_response["id"]).to eq(merchant.id)
+    end
+  end
 end
