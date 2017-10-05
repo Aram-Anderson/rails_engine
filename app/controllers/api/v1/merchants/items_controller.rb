@@ -1,11 +1,5 @@
 class Api::V1::Merchants::ItemsController < ApplicationController
   def index
-    render json: Merchant.most_items(search_params[:quantity].to_i)
-  end
-
-  private
-
-  def search_params
-    params.permit(:quantity)
+    render json: Merchant.find(params[:id]).items
   end
 end

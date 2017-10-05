@@ -36,7 +36,9 @@ Rails.application.routes.draw do
           get '/random', to: 'merchants/random#show'
           get '/most_revenue', to: 'merchants/revenue#index'
           get '/:id/most_revenue', to: 'merchants/revenue#show'
-          get '/most_items', to: 'merchants/items#index'
+          get '/most_items', to: 'merchants/most_items#index'
+          get '/revenue', to: '\erchants/date#index'
+          get ':id/items', to: 'merchants/items#index'
         end
       end
       resources :transactions, only: [:index, :show] do
