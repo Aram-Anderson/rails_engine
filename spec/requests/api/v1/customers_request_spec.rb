@@ -163,4 +163,34 @@ describe "Customers API" do
       expect(customer["first_name"]).to eq(customer_1.first_name).or eq(customer_2.first_name)
     end
   end
+
+  context "GET customers relationships" do
+    it "returns a collection of associated invoices" do
+      customer = create(:customer)
+      invoice_1 = create(:invoice, customer_id: customer.id)
+      invoice_2 = create(:invoice, customer_id: customer.id)
+
+      get "/api/v1/customers/#{customer.id}/invoices"
+
+      invoices = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(invoices.count).to eq(2)
+    end
+
+    it "returns a collection of associated transactions" do
+      customer = create(:customer)
+      invoice_1 = create(:invoice, customer_id: customer.id)
+      invoice_2 = create(:invoice, customer_id: customer.id)
+      transaction_1 = create(:transaction, invoice_id: invoice_1.id)
+      transaction_2 = create(:transaction, invoice_id: invoice_2.id)
+
+      get "/api/v1/customers/#{customer.id}/transactions"
+
+      transactions = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(transactions.count).to eq(2)
+    end
+  end
 end

@@ -106,21 +106,6 @@ describe "Transactions API" do
       expect(transaction_response["result"]).to eq(transaction.result)
     end
 
-    it "can find a transaction by credit_card_expiration_date" do
-      transaction = create(:transaction, credit_card_expiration_date: 1)
-
-      get "/api/v1/transactions/find?credit_card_expiration_date=#{transaction.credit_card_expiration_date}"
-
-      transaction_response = JSON.parse(response.body)
-
-      expect(response).to be_success
-      expect(transaction_response["id"]).to eq(transaction.id)
-      expect(transaction_response["invoice_id"]).to eq(transaction.invoice_id)
-      expect(transaction_response["credit_card_number"]).to eq(transaction.credit_card_number.to_s)
-      expect(transaction_response["credit_card_expiration_date"]).to eq(transaction.credit_card_expiration_date)
-      expect(transaction_response["result"]).to eq(transaction.result)
-    end
-
     it "can find a transaction by result" do
       transaction = create(:transaction)
 
@@ -191,19 +176,6 @@ describe "Transactions API" do
       expect(transactions.first["id"]).to eq(transaction_1.id)
     end
 
-    it "can find all transactions by credit_card_expiration_date" do
-      transaction_1 = create(:transaction, credit_card_expiration_date: 1)
-      transaction_2 = create(:transaction, credit_card_expiration_date: 1)
-      transaction_3 = create(:transaction, credit_card_expiration_date: 2)
-
-      get "/api/v1/transactions/find_all?credit_card_expiration_date=#{transaction_1.credit_card_expiration_date}"
-
-      transactions = JSON.parse(response.body)
-
-      expect(transactions.count).to eq(2)
-      expect(transactions.first["id"]).to eq(transaction_1.id)
-    end
-
     it "can find all transactions by result" do
       transaction_1 = create(:transaction, result: 1)
       transaction_2 = create(:transaction, result: 1)
@@ -229,6 +201,21 @@ describe "Transactions API" do
 
       expect(response).to be_success
       expect(transaction["result"]).to eq(transaction_1.result).or eq(transaction_2.result)
+    end
+  end
+
+  context "GET transactions relationships" do
+    it "returns the invoice associated with that transaction" do
+      invoice_1 = create(:invoice)
+      invoice_2 = create(:invoice)
+      transaction = create(:transaction, invoice_id: invoice_1.id)
+
+      get "/api/v1/transactions/#{transaction.id}/invoice"
+
+      invoice = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(invoice["id"]).to eq(invoice_1.id)
     end
   end
 end
