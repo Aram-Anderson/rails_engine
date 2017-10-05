@@ -45,12 +45,14 @@ Rails.application.routes.draw do
           get '/find_all', to: 'merchants/search#index'
           get '/find', to: 'merchants/search#show'
           get '/random', to: 'merchants/random#show'
-          get '/most_revenue', to: 'merchants/revenue#index'
-          get '/:id/most_revenue', to: 'merchants/revenue#show'
+          get '/most_revenue', to: 'merchants/most_revenue#index'
+          get '/:id/most_revenue', to: 'merchants/most_revenue#show'
           get '/most_items', to: 'merchants/most_items#index'
           get '/revenue', to: 'merchants/date#index'
           get '/:id/items', to: 'merchants/items#index'
           get '/:id/invoices', to: 'merchants/invoices#index'
+          get '/:id/favorite_customer', to: 'merchants/customer#show'
+          get '/:id/revenue', to: 'merchants/revenue#show'
         end
       end
       resources :transactions, only: [:index, :show] do

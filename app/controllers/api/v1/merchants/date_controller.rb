@@ -6,6 +6,7 @@ class Api::V1::Merchants::DateController < ApplicationController
   private
 
   def search_params
-    params.permit(:date)
+    params.permit(:date,
+                  )
   end
 end
