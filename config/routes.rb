@@ -61,13 +61,13 @@ Rails.application.routes.draw do
         end
       end
       resources :transactions, only: [:index, :show] do
-      collection do
-        get '/find_all', to: 'transactions/search#index'
-        get '/find', to: 'transactions/search#show'
-        get '/random', to: 'transactions/random#show'
-        get '/:id/invoice', to: 'transactions/invoices#show'
+        collection do
+          get '/find_all', to: 'transactions/search#index'
+          get '/find', to: 'transactions/search#show'
+          get '/random', to: 'transactions/random#show'
+          get '/:id/invoice', to: 'transactions/invoices#show'
+        end
       end
-    end
     end
   end
 end
