@@ -73,4 +73,19 @@ context "All merchants" do
       expect(revenue["total_revenue"]).to eq("100.0")
     end
   end
+
+  context "Single merchant" do
+    describe "GET /api/v1/merchants/:id/revenue" do
+      it "returns the total revenue for that merchant across successful transactions" do
+        test_prep
+
+        get '/api/v1/merchants/1/revenue'
+
+        revenue = JSON.parse(response.body)
+
+        expect(response).to be_success
+        expect(revenue["revenue"]).to eq("110.0")
+      end
+    end
+  end
 end
