@@ -6,10 +6,4 @@ class Api::V1::Merchants::RevenueController < ApplicationController
       render json: {"revenue" => (Merchant.revenue_for_merchant(params[:id]).to_f / 100).to_s}
     end
   end
-
-  private
-
-  def search_params
-    params.permit(:date, :id)
-  end
 end
