@@ -1,6 +1,6 @@
 # Rails Engine Documentation
 
-### Project by Mike Butera and Aram Anderson
+### Project by Mike Butera([github](https://github.com/Boots2291)) and Aram Anderson([github](https://github.com/Aram-Anderson))
 
 This app is a restful API built in Rails using PostgreSQL as a database.
 
@@ -19,9 +19,9 @@ To run the spec harness, spin up a local server with `rails s` in the root direc
 
 Tech used
 
-Ruby version 2.4.1
-Rails version 5.1.4
-PostgreSQL
+* Ruby version 2.4.1
+* Rails version 5.1.4
+* PostgreSQL
 
 There are quite a few API endpoints available. To access any of them, prepend one of the endpoints below with https://rails-engine-m-a.herokuapp.com if you'd like to run it live on Heroku, or http://localhost:3000 if you're running it on a local server via rails s.
 
