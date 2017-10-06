@@ -5,14 +5,14 @@ class Item < ApplicationRecord
 
   default_scope -> { order(:id) }
 
-  def self.most_revenue(limit)
-    unscoped
-    .joins(invoices: [:transactions])
-    .merge(Transaction.successful)
-    .group(:id)
-    .order('sum(invoice_items.unit_price * invoice_items.quantity) DESC')
-    .limit(limit)
-  end
+  # def self.most_revenue(limit)
+  #   unscoped
+  #   .joins(invoices: [:transactions])
+  #   .merge(Transaction.successful)
+  #   .group(:id)
+  #   .order('sum(invoice_items.unit_price * invoice_items.quantity) DESC')
+  #   .limit(limit)
+  # end
 
   def self.most_sold(limit)
     unscoped
@@ -23,7 +23,7 @@ class Item < ApplicationRecord
     .order('total DESC')
     .limit(limit)
   end
-  
+
   def best_day
     invoices.joins(:transactions, :invoice_items)
     .merge(Transaction.successful)
