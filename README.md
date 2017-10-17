@@ -23,7 +23,7 @@ Tech used
 * Rails version 5.1.4
 * PostgreSQL
 
-There are quite a few API endpoints available. To access any of them, prepend one of the endpoints below with https://rails-engine-m-a.herokuapp.com if you'd like to run it live on Heroku, or http://localhost:3000 if you're running it on a local server via rails s.
+There are quite a few API endpoints available. To access any of them, prepend one of the endpoints below with  http://localhost:3000 if you're running it on a local server via rails s.
 
 * GET '/api/v1/customers/random'
 
